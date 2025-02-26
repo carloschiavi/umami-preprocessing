@@ -4,11 +4,11 @@ jets:
     - eta
     - centFrac
     - isolFrac
-    - massTrkSys
     - ptRatioEflowApprox
+    - massTrkSys
     - mEflowApprox
     - SumPtTrkFrac
-#    - absipSigLeadTrk
+    - absipSigLeadTrk
     - etOverPtLeadTrk
     - innerTrkAvgDist
     - dRmax
@@ -18,34 +18,30 @@ jets:
     - HadronConeExclTruthLabelID
     - HadronConeExclTruthLabelPt
     - eventNumber
+    - IsHadronicTauFromTruthTaus
+    - classifierParticleTypeFromTruthTaus
+    - numChargedFromTruthTaus
+    - nTracks
 
 tau_tracks:
   inputs:
-    - d0
-    - z0SinTheta
-    - d0Uncertainty
-    - z0SinThetaUncertainty
-    - dphi
+    - pt
     - deta
-    - qOverP
-    - IP3D_signed_d0
-    - IP3D_signed_z0
-    - IP3D_signed_d0_significance
-    - IP3D_signed_z0_significance
-    - phiUncertainty
-    - thetaUncertainty
-    - qOverPUncertainty
-    - numberOfPixelHits
-    - numberOfSCTHits
-    - numberOfInnermostPixelLayerHits
-    - numberOfNextToInnermostPixelLayerHits
-#    - numberOfPixelHoles
-#    - numberOfSCTHoles
+    - dphi
     - d0TJVA
     - d0SigTJVA
     - z0sinthetaTJVA
     - z0sinthetaSigTJVA
-    - pt
-    - ptfrac
-    - qOverPUncertainty
+    - numberOfPixelHits
+    - numberOfSCTHits
+    - numberOfInnermostPixelLayerHits
+
+cells:
+  inputs:
+    - et
+    - dEta
+    - dPhi
+    - SECOND_LAMBDA
+    - CENTER_LAMBDA
+    - SECOND_R
 
