@@ -1,0 +1,131 @@
+variables: !include variables-tautrig.yaml
+global_cuts: !include splits/simple-split.yaml
+
+# for k-folded splits, only required for final trainings of GN2
+# global_cuts: !include splits/fold0.yaml
+
+ttbar: &ttbar
+  name: ttbar
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/GAMMATAUTAU/user.cschiavi.801002.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43361636._000001.output.h5"
+
+gammastar: &gammastar
+  name: gammastar
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/GAMMATAUTAU/user.cschiavi.801002.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43361636._000001.output.h5"
+
+ztautau: &ztautau
+  name: ztautau
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/ZTAUTAU_SH/user.cschiavi.700794.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43370167._000001.output.h5"
+
+jz1: &jz1
+  name: jz1
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/JZ1/user.cschiavi.801166.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43367659._000001.output.h5"
+
+jz2: &jz2
+  name: jz2
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/JZ2/user.cschiavi.801167.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43367660._000001.output.h5"
+
+jz3: &jz3
+  name: jz3
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/JZ3/user.cschiavi.801168.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43370131._000001.output.h5"
+
+jz4: &jz4
+  name: jz4
+  equal_jets: False
+  pattern:
+    - "/home/schiavi/workarea/PRE-UPP-DATA/TRIGGER_TAU_FINAL/JZ4/user.cschiavi.801169.e8514_e8528_s4159_s4114_r15271.tdd.trigger_tau.25_0_24.r12684_r12782.v0-615-gdd5e560_output.h5/user.cschiavi.43370132._000001.output.h5"
+
+
+
+lowpt: &lowpt
+  name: lowpt
+  cuts:
+    - [pt, ">", 20_000]
+    - [pt, "<", 250_000]
+    - [eta, ">", -2.5]
+    - [eta, "<", 2.5]
+
+
+
+components:
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *ttbar
+    flavours: [hadtaujets]
+    num_jets: 5_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *gammastar
+    flavours: [hadtaujets]
+    num_jets: 4_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *ztautau
+    flavours: [hadtaujets]
+    num_jets: 1_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *jz1
+    flavours: [qcdjets]
+    num_jets: 8_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *jz2
+    flavours: [qcdjets]
+    num_jets: 8_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *jz3
+    flavours: [qcdjets]
+    num_jets: 8_000
+
+  - region:
+      <<: *lowpt
+    sample:
+      <<: *jz4
+    flavours: [qcdjets]
+    num_jets: 8_000
+
+
+resampling:
+  target: hadtaujets
+  method: pdf
+  sampling_fraction: auto
+  variables:
+    pt:
+#      bins: [[20_000, 250_000, 50]]
+      bins: [[20_000, 250_000, 5]]
+    eta:
+#      bins: [[-2.5, 2.5, 20]]
+      bins: [[-2.5, 2.5, 7]]
+
+
+# note: sensible defaults are defined in the PreprocessingConfig constructor
+global:
+  jets_name: jets
+  batch_size: 10_000
+  num_jets_estimate: 10_000
+  base_dir: /home/schiavi/workarea/POST-UPP-DATA/
+  ntuple_dir: /home/schiavi/workarea/GNTauTrigger-FINAL/DATA/
